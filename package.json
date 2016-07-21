@@ -1,0 +1,24 @@
+{
+  "name": "gulis-api",
+  "version": "1.0.0",
+  "description": "Ptt Beauty API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxis1718/gulis-api.git"
+  },
+  "author": "maxis1718",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxis1718/gulis-api/issues"
+  },
+  "homepage": "https://github.com/maxis1718/gulis-api#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
