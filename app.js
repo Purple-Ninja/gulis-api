@@ -7,6 +7,7 @@ var MongoClient = require('mongodb').MongoClient;
 var mongouri = process.env.MONGOURI || 'mongodb://localhost:27017/slack';
 var app = express();
 var db;
+var beauty;
 
 app.set('port', process.env.PORT || 5000);
 
@@ -19,111 +20,50 @@ MongoClient.connect(mongouri, function(err, database) {
     // global variable for the mongo db
     db = database;
 
+    // pass the db cursor to beauty lib
+    beauty = require('./lib/beauty')(db);
+
+    // Routes
+    /*
+     * entry for search
+     * query
+     *  keyword: 長腿
+     *  push: 46
+     *  type: 神人
+     *  limit: 2
+     */
+    app.get('/beauty/search', beauty.search);
+
+    /*
+     * entry for handling user feedback
+     * body
+     *  like: true/false
+     *  imgId: target image id
+     *  userId: user id
+     */
+    app.post('/beauty/feedback', beauty.feedback);
+
+    /*
+     * entry for logging
+     * body
+     *  user: {string} user id or user name
+     *  raw: {string} user's raw input
+     *  (optional) meta: {object} containing user_id, user_ip
+     */
+    app.post('/beauty/logging', beauty.logging);
+
+    /*
+     * entry for getting trending
+     * query
+     *  (optional) userId
+     */
+    app.get('/beauty/trending', beauty.trending);
+
     // start server after connecting to mongodb
     app.listen(app.get('port'), function() {
         console.log('[node] app is running on port', app.get('port'));
     });
 });
-
-// get one image from beauty.posts by giving post_id
-var getOneImage = function (postid, callback) {
-    var query = {
-        'post_id': postid
-    };
-    db.collection('beauty.posts')
-        .find(query)
-        .sort({ display: 1 })
-        .limit(1)
-        .toArray(function(err, docs) {
-            callback(err, docs[0] || {});
-        }
-    );
-};
-
-/*
- * entry for search
- * query
- *  keyword: 長腿
- *  push: 46
- *  type: 神人
- *  limit: 2
- */
-app.get('/beauty/search', function(req, res) {
-    var query = {
-        tag: req.query.tag || '正妹',
-        fetched: true,
-        push: { $gte: Number(req.query.push) || 1 },
-        image_count: { $gte: 1 },
-    };
-    if (req.query.keyword) {
-        query.title = new RegExp(req.query.keyword);
-    }
-    db.collection('beauty.lists')
-        .find(query)
-        .sort({ display: 1 })
-        .limit(1)
-        .toArray(function(err, docs) {
-            getOneImage(docs[0]['post_id'], function(err, img){
-                res.status(200).json(img);
-            });
-        }
-    );
-});
-
-/*
- * entry for handling user feedback
- * body
- *  like: true/false
- *  imgId: target image id
- *  userId: user id
- */
-app.post('/beauty/feedback', function(req, res) {
-    res.status(200);
-});
-
-/*
- * entry for logging
- * body
- *  user: {string} user id or user name
- *  raw: {string} user's raw input
- *  (optional) meta: {object} containing user_id, user_ip
- */
-app.post('/beauty/logging', function(req, res) {
-    var userLog = {
-        user: req.body.user,
-        raw: req.body.raw,
-        date: new Date()
-    };
-    if (req.body.meta) {
-        userLog.meta = req.body.meta || {};
-    }
-    db.collection('beauty.query')
-        .insertOne(userLog, function(err, res) {
-            res.status(200).json({message: err || 'success'});
-        }
-    );
-});
-
-/*
- * entry for getting trending
- * query
- *  (optional) userId
- */
-app.get('/beauty/trending', function(req, res) {
-    var data = {
-        suggestions: [{
-            title: 'Hi',
-            push: 100,
-            url: 'http://i.imgur.com/IDfkVvc.png'
-        },{
-            title: 'Hihi',
-            push: 50,
-            url: 'http://i.imgur.com/EIH9cNu.jpg'
-        }]
-    };
-    res.status(200).json(data);
-});
-
 
 module.exports = app;
 
