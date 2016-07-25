@@ -25,7 +25,7 @@ MongoClient.connect(mongouri, function(err, database) {
     });
 });
 
-
+// get one image from beauty.posts by giving post_id
 var getOneImage = function (postid, callback) {
     var query = {
         'post_id': postid
@@ -84,11 +84,24 @@ app.post('/beauty/feedback', function(req, res) {
 /*
  * entry for logging
  * body
- *  query
- *  meta: {object} containing user_id, user_ip and timestamp
+ *  user: {string} user id or user name
+ *  raw: {string} user's raw input
+ *  (optional) meta: {object} containing user_id, user_ip
  */
 app.post('/beauty/logging', function(req, res) {
-    res.status(200);
+    var userLog = {
+        user: req.body.user,
+        raw: req.body.raw,
+        date: new Date()
+    };
+    if (req.body.meta) {
+        userLog.meta = req.body.meta || {};
+    }
+    db.collection('beauty.query')
+        .insertOne(userLog, function(err, res) {
+            res.status(200).json({message: err || 'success'});
+        }
+    );
 });
 
 /*
