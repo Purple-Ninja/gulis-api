@@ -1,0 +1,10 @@
+{
+    "db": {
+        "mongodb": {
+            "uri": "mongodb://localhost:27017/slack"
+        },
+        "elasticsearch": {
+            "uri": "http://localhost:9200/gulis/article/_search"
+        }
+    }
+}
