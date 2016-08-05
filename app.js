@@ -8,7 +8,7 @@ var config = require('config');
 var db = config.get('db.elasticsearch');
 
 // set db uri
-beauty.setUri(db.uri);
+beauty.source.setUri(db.uri);
 
 app.set('port', process.env.PORT || 5000);
 
