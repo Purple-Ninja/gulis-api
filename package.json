@@ -5,8 +5,15 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "lint": "./node_modules/.bin/jshint .",
+    "validate": "npm ls"
   },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maxis1718/gulis-api.git"
@@ -24,5 +31,11 @@
     "lodash": "^4.14.1",
     "mongodb": "^2.2.4",
     "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "jshint": "^2.9.2",
+    "mocha": "^3.0.1",
+    "precommit-hook": "^3.0.0"
   }
 }
