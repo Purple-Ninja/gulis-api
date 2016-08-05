@@ -1,0 +1,10 @@
+{
+    "db": {
+        "mongodb": {
+            "uri": "mongodb://hack.wjhuang.net:27017/slack"
+        },
+        "elasticsearch": {
+            "uri": "http://hack.wjhuang.net:9200/gulis/article/_search"
+        }
+    }
+}
