@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var utils = require('../lib/utils');
 
 describe('#Utils', function(){
-    describe('randomPick', function(){
+    describe('.randomPick()', function(){
         it('should pick 1 from [1]', function(){
             var array = [1];
             expect(utils.randomPick(array)).to.equal(1);
