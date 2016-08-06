@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "./node_modules/.bin/mocha --reporter spec",
+    "test": "./node_modules/.bin/mocha ./tests/* --reporter spec",
     "lint": "./node_modules/.bin/jshint .",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "test-coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./tests/*"
   },
   "pre-commit": [
     "lint",
@@ -34,8 +35,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "istanbul": "^0.4.4",
     "jshint": "^2.9.2",
     "mocha": "^3.0.1",
-    "precommit-hook": "^3.0.0"
+    "precommit-hook": "^3.0.0",
+    "reqres": "^1.2.2",
+    "sinon": "^1.17.5"
   }
 }
