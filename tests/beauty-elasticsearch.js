@@ -1,16 +1,17 @@
 'use strict';
 
 var expect = require('chai').expect;
-var beauty = require('../lib/beauty-elasticsearch');
+var Search = require('../lib/search');
+var ElasticSearch = require('../lib/elasticsearch');
 var sinon = require('sinon');
 var request = require('request');
 var reqres = require('reqres');
 
-describe('#beauty', function(){
+describe('#Search', function(){
     // test buildOptions
     describe('.buildOptions()', function(){
         it('should return url and form', function(){
-            expect(beauty.buildOptions({})).to.have.all.keys(['url', 'form']);
+            expect(Search.buildOptions({}, 'localhost')).to.have.all.keys(['url', 'form']);
         });
 
         it('should return the options containing size=1 when limit=1', function(){
@@ -19,9 +20,8 @@ describe('#beauty', function(){
                     limit: 1
                 }
             };
-            var options = beauty.buildOptions(req);
+            var options = Search.buildOptions(req, 'localhost');
             var form = JSON.parse(options.form);
-            // expect(form).to.include.keys('size');
             expect(form.size).to.equal(1);
         });
 
@@ -31,7 +31,7 @@ describe('#beauty', function(){
                     keyword: '透明系'
                 }
             };
-            var options = beauty.buildOptions(req);
+            var options = Search.buildOptions(req, 'localhost');
             var form = JSON.parse(options.form);
             expect(form.query.bool.must.multi_match.query).to.equal('透明系');
         });
@@ -39,15 +39,15 @@ describe('#beauty', function(){
 
     describe('.source', function(){
         it('should return setUri and getUri', function(){
-            expect(beauty.source).to.have.all.keys(['setUri', 'getUri']);
+            expect(ElasticSearch.source).to.have.all.keys(['setUri', 'getUri']);
         });
         it('should get undefined uri before set', function(){
-            expect(beauty.source.getUri()).to.equal(undefined);
+            expect(ElasticSearch.source.getUri()).to.equal(undefined);
         });
         it('should get correct uri after set', function(){
             var uri = 'localhost';
-            beauty.source.setUri(uri);
-            expect(beauty.source.getUri()).to.equal(uri);
+            ElasticSearch.source.setUri(uri);
+            expect(ElasticSearch.source.getUri()).to.equal(uri);
         });
     });
 
@@ -79,7 +79,7 @@ describe('#beauty', function(){
                 ]
             }
         };
-        var formatted = beauty.formatter(results);
+        var formatted = Search.formatter(results);
 
         it('should return the same length of search results', function(){
             expect(formatted.length).to.equal(2);
@@ -96,7 +96,7 @@ describe('#beauty', function(){
         });
 
         it('should return [] when no search results', function(){
-            expect(beauty.formatter({})).to.eql([]);
+            expect(Search.formatter({})).to.eql([]);
         });
     });
 
@@ -135,7 +135,7 @@ describe('#beauty', function(){
             sinon.stub(request, 'post', function(options, cb){
                 cb(null, {}, mockBody);
             });
-            beauty.search(req, res);
+            Search.search(req, res);
         });
     });
 });
