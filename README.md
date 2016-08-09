@@ -1,4 +1,4 @@
-# gulis-api
+# gulis-middleware
 > the search api for ptt beauty
 
 [![Build Status](https://travis-ci.org/Purple-Ninja/gulis-api.svg?branch=master)](https://travis-ci.org/Purple-Ninja/gulis-api)
