@@ -1,7 +1,7 @@
 {
-  "name": "gulis-api",
-  "version": "1.0.0",
-  "description": "Ptt Beauty API",
+  "name": "gulis-middleware",
+  "version": "0.2.0",
+  "description": "A search api for ptt beauty",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -17,14 +17,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxis1718/gulis-api.git"
+    "url": "git+https://github.com/Purple-Ninja/gulis-middleware.git"
   },
   "author": "maxis1718",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maxis1718/gulis-api/issues"
+    "url": "https://github.com/Purple-Ninja/gulis-middleware/issues"
   },
-  "homepage": "https://github.com/maxis1718/gulis-api#readme",
+  "homepage": "https://github.com/Purple-Ninja/gulis-middleware#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "config": "^1.21.0",
