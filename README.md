@@ -1,8 +1,8 @@
 # gulis-middleware
 > the search api for ptt beauty
 
-[![Build Status](https://travis-ci.org/Purple-Ninja/gulis-api.svg?branch=master)](https://travis-ci.org/Purple-Ninja/gulis-api)
-[![Coverage Status](https://coveralls.io/repos/github/Purple-Ninja/gulis-api/badge.svg?branch=master)](https://coveralls.io/github/Purple-Ninja/gulis-api?branch=master)
+[![Build Status](https://travis-ci.org/Purple-Ninja/gulis-middleware.svg?branch=master)](https://travis-ci.org/Purple-Ninja/gulis-middleware)
+[![Coverage Status](https://coveralls.io/repos/github/Purple-Ninja/gulis-middleware/badge.svg?branch=master)](https://coveralls.io/github/Purple-Ninja/gulis-middleware?branch=master)
 
 ### Quick start
 
